@@ -89,6 +89,10 @@ section.block{position:relative;z-index:1}
 .disc::after{content:none;position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 10%,rgba(255,255,255,.08) 14%,transparent 20% 60%,rgba(255,255,255,.06) 64%,transparent 70%)}
 .label-txt{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:clamp(14px,3.4vw,22px);letter-spacing:.2em;color:var(--night);will-change:transform;pointer-events:none}
 .record{perspective:1200px}
+.faller{position:fixed;right:max(16px,env(safe-area-inset-right,0px));top:50%;width:clamp(90px,12vw,170px);aspect-ratio:279/240;background:url(dropsheet.webp) 0 0/1200% 100% no-repeat;z-index:6;pointer-events:none;opacity:0;transform:translateY(-70vh);transition:transform .7s cubic-bezier(.25,.7,.35,1),opacity .25s}
+.faller.on{opacity:1;transform:translateY(-50%)}
+@media (max-width:620px){.faller{width:78px}}
+@media (prefers-reduced-motion:reduce){.faller{transition:opacity .2s}}
 .plate{position:absolute;inset:0;transform:rotateX(62deg);transform-style:preserve-3d}
 .runner{position:absolute;left:50%;top:14%;width:36%;aspect-ratio:210/300;transform:translateX(-50%);pointer-events:none;z-index:2}
 .r-sprite{position:absolute;inset:0;background:url(runsheet.webp) 0 0/1200% 100% no-repeat;transition:transform .15s}
@@ -531,6 +535,8 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
   </section>
 </main>
 
+<div class="faller" id="faller" aria-hidden="true"></div>
+
 <footer>
   <div class="wrap">
     <span>ROMY · French Touch / House / Electro</span>
@@ -716,6 +722,31 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
       if (mode === "ride") { showFall(12 + Math.floor(el * 8) % 4); const m = ((off % 360) + 360) % 360; if (Math.abs(ang - a2) >= 360 && (m < 14 || m > 346)) { mode = "getup"; t0 = t; a0 = ang - (m > 180 ? m - 360 : m); } }
       if (mode === "getup") { const i = 11 - Math.floor(el * 20); if (i < 0) { mode = "run"; a0 = ang; f = 0; } else showFall(i); }
     }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+
+/* Petit ROMY qui tombe quand on descend dans la page */
+(() => {
+  const fa = document.getElementById("faller"), runner = document.getElementById("runner"), rec = document.getElementById("record");
+  if (!fa || !runner || !rec) return;
+  let falling = false, f = 0, acc = 0, prev = performance.now(), lastY = window.scrollY;
+  function check(){
+    const out = rec.getBoundingClientRect().bottom < window.innerHeight * 0.25;
+    if (out && !falling) { falling = true; f = 0; acc = 0; fa.classList.add("on"); runner.style.visibility = "hidden"; }
+    else if (!out && falling) { falling = false; fa.classList.remove("on"); runner.style.visibility = ""; }
+  }
+  window.addEventListener("scroll", check, {passive:true}); window.addEventListener("resize", check); check();
+  function step(t){
+    const dt = Math.min((t - prev) / 1000, 0.05); prev = t;
+    if (falling) {
+      const sv = Math.abs(window.scrollY - lastY) / Math.max(dt, 0.001);
+      acc += dt * (12 + Math.min(sv / 80, 18));
+      while (acc >= 1) { acc -= 1; f = f < 4 ? f + 1 : (f >= 11 ? 4 : f + 1); }
+      fa.style.backgroundPosition = (f / 11 * 100) + "% 0";
+    }
+    lastY = window.scrollY;
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
