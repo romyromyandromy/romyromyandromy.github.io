@@ -90,9 +90,11 @@ section.block{position:relative;z-index:1}
 .label-txt{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:clamp(14px,3.4vw,22px);letter-spacing:.2em;color:var(--night);will-change:transform;pointer-events:none}
 .record{perspective:1200px}
 .plate{position:absolute;inset:0;transform:rotateX(62deg);transform-style:preserve-3d}
-.runner{position:absolute;left:50%;top:14%;width:36%;aspect-ratio:200/300;transform:translateX(-50%);pointer-events:none;z-index:2}
-.r-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.r-shadow{position:absolute;left:22%;right:18%;bottom:0;height:6%;border-radius:50%;background:radial-gradient(closest-side,rgba(23,18,15,.35),transparent);will-change:transform}
+.runner{position:absolute;left:50%;top:14%;width:26%;aspect-ratio:224/448;transform:translateX(-50%);pointer-events:none;z-index:2}
+.r-fig{position:absolute;inset:0;transform-origin:50% 100%;will-change:transform}
+.r-fig img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.r-leg{will-change:transform}
+.r-shadow{position:absolute;left:12%;right:12%;bottom:-3%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(23,18,15,.35),transparent);will-change:transform}
 .deck{justify-self:center;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .record{touch-action:none;user-select:none;-webkit-user-select:none}
 .record.held .disc{box-shadow:0 18px 40px -18px rgba(232,121,157,.55)}
@@ -292,72 +294,11 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
           <div class="plate"><div class="disc" id="disc"></div><div class="label-txt" id="label"></div></div>
           <div class="runner" id="runner" aria-hidden="true">
             <span class="r-shadow"></span>
-            <svg class="r-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <g fill="none" stroke="#1a1414" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-                <g id="rb-all">
-                  <!-- bras arrière -->
-                  <g id="rb-armF" transform="rotate(0 100 142)">
-                    <path d="M92 140 Q91 156 93 172 L107 172 Q109 156 108 140 Z" fill="#e7a1b1"/>
-                    <g id="rb-foreF" transform="rotate(0 100 170)">
-                      <path d="M93 168 L93 192 Q100 197 107 192 L107 168 Z" fill="#e7a1b1"/>
-                      <circle cx="100" cy="199" r="7.5" fill="#dc935f"/>
-                    </g>
-                  </g>
-                  <!-- jambe arrière -->
-                  <g id="rb-thighF" transform="rotate(0 100 196)">
-                    <path d="M86 192 L86 238 Q100 244 114 238 L114 192 Z" fill="#e7a1b1"/>
-                    <g id="rb-shinF" transform="rotate(0 100 238)">
-                      <path d="M85 234 L84 276 Q100 282 116 276 L115 234 Z" fill="#e7a1b1"/>
-                      <path d="M86 274 Q85 290 92 292 L128 292 Q134 290 131 282 Q126 274 114 272 Z" fill="#ece8df"/>
-                    </g>
-                  </g>
-                  <!-- torse -->
-                  <path d="M80 136 Q100 126 120 136 L123 196 Q100 204 77 196 Z" fill="#f6b8c5"/>
-                  <path d="M100 132 L100 196" stroke-width="2.5"/>
-                  <path d="M78 186 Q100 192 122 186" stroke-width="2.5"/>
-                  <rect x="104" y="146" width="13" height="11" rx="2" fill="#f6b8c5" stroke-width="2.5"/>
-                  <!-- cou et col -->
-                  <path d="M94 116 L94 132 L106 132 L106 116 Z" fill="#dc935f"/>
-                  <path d="M90 130 Q100 138 110 130" fill="#fff" stroke-width="3"/>
-                  <path d="M86 132 L96 128 L100 140 Z M114 132 L104 128 L100 140 Z" fill="#f6b8c5" stroke-width="3"/>
-                  <!-- jambe avant -->
-                  <g id="rb-thighN" transform="rotate(0 100 196)">
-                    <path d="M86 192 L86 238 Q100 244 114 238 L114 192 Z" fill="#f6b8c5"/>
-                    <rect x="109" y="206" width="10" height="14" rx="2" fill="#f6b8c5" stroke-width="2.5"/>
-                    <g id="rb-shinN" transform="rotate(0 100 238)">
-                      <path d="M85 234 L84 276 Q100 282 116 276 L115 234 Z" fill="#f6b8c5"/>
-                      <path d="M86 274 Q85 290 92 292 L128 292 Q134 290 131 282 Q126 274 114 272 Z" fill="#fbf8f1"/>
-                      <path d="M92 285 L129 285" stroke-width="2"/>
-                    </g>
-                  </g>
-                  <!-- tête -->
-                  <g id="rb-head" transform="rotate(0 100 118)">
-                    <circle cx="106" cy="76" r="44" fill="#e9a36c"/>
-                    <ellipse cx="88" cy="84" rx="8" ry="10" fill="#e9a36c"/>
-                    <!-- cheveux -->
-                    <path d="M148 64 Q154 44 140 30 Q130 12 106 16 Q82 10 68 26 Q52 34 54 58 Q46 76 54 94 Q50 110 62 118 Q72 124 80 112 Q86 120 94 110 Q90 98 95 88 Q92 76 101 68 Q113 64 119 55 Q127 66 139 61 Q143 68 148 64 Z" fill="#4a2c1a"/>
-                    <path d="M70 44 Q78 52 76 64 M84 30 Q92 40 90 52 M60 78 Q66 88 64 98" stroke="#2c1a10" stroke-width="2.5"/>
-                    <path d="M104 26 Q108 14 116 10" stroke-width="3"/>
-                    <!-- œil + lunettes -->
-                    <path d="M120 80 Q129 72 138 80 Q129 88 120 80 Z" fill="#fff" stroke-width="2.5"/>
-                    <circle cx="131" cy="79" r="3.6" fill="#1a1414" stroke="none"/>
-                    <path d="M119 76 Q129 70 139 76" stroke-width="3.5"/>
-                    <circle cx="129" cy="80" r="12.5" stroke-width="3"/>
-                    <path d="M116.5 79 L94 77" stroke-width="2.5"/>
-                    <!-- bouche -->
-                    <path d="M134 104 Q140 102 145 104" stroke-width="3"/>
-                  </g>
-                  <!-- bras avant -->
-                  <g id="rb-armN" transform="rotate(0 100 142)">
-                    <path d="M92 140 Q91 156 93 172 L107 172 Q109 156 108 140 Z" fill="#f6b8c5"/>
-                    <g id="rb-foreN" transform="rotate(0 100 170)">
-                      <path d="M93 168 L93 192 Q100 197 107 192 L107 168 Z" fill="#f6b8c5"/>
-                      <circle cx="100" cy="199" r="7.5" fill="#e9a36c"/>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </svg>
+            <div class="r-fig" id="r-fig">
+              <img class="r-leg" id="r-legL" src="runner-legL.png" alt="">
+              <img class="r-leg" id="r-legR" src="runner-legR.png" alt="">
+              <img class="r-body" src="runner-body.png" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -741,33 +682,21 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
 (() => { const top = document.querySelector(".top"); const f = () => top.classList.toggle("scrolled", window.scrollY > 24); f(); window.addEventListener("scroll", f, {passive:true}); })();
 
 /* Petit ROMY qui court sur le disque */
-function romyPose(root, p, amt){
-  const q = id => root.querySelector('#'+id);
-  const set = (id, a, x, y) => q(id).setAttribute('transform', `rotate(${a} ${x} ${y})`);
-  const s = Math.sin(p), c = Math.cos(p);
-  // jambes : cuisse +-38°, genou plié surtout en phase arrière
-  set('rb-thighN',  38*s*amt, 100, 196); set('rb-shinN', (12 + 70*Math.max(0,  c))*amt, 100, 238);
-  set('rb-thighF', -38*s*amt, 100, 196); set('rb-shinF', (12 + 70*Math.max(0, -c))*amt, 100, 238);
-  // bras opposés aux jambes, coudes pliés
-  set('rb-armN', -40*s*amt, 100, 142); set('rb-foreN', -75*amt - 10, 100, 170);
-  set('rb-armF',  40*s*amt, 100, 142); set('rb-foreF', -75*amt - 10, 100, 170);
-  set('rb-head', 2*s*amt, 100, 118);
-  const bob = Math.abs(Math.sin(p)) * 7 * amt;
-  q('rb-all').setAttribute('transform', `translate(0 ${-bob}) rotate(${6*amt} 100 290)`);
-}
 (() => {
-  const root = document.getElementById("runner"), sh = document.querySelector(".r-shadow");
-  if (!root) return;
-  let phase = 0, prev = performance.now(), amtS = 0;
+  const fig = document.getElementById("r-fig"), L = document.getElementById("r-legL"), R = document.getElementById("r-legR"), sh = document.querySelector(".r-shadow");
+  if (!fig) return;
+  let phase = 0, prev = performance.now();
   function step(t){
     const dt = Math.min((t - prev) / 1000, 0.05); prev = t;
     const v = window.__romyVel || 0, sp = Math.min(Math.abs(v) / 100, 4);
-    const target = sp > 0.05 ? 1 : 0;
-    amtS += (target - amtS) * Math.min(dt * 6, 1);
-    phase += dt * (7 + sp * 4) * amtS;
-    romyPose(root, phase, amtS);
-    const bob = Math.abs(Math.sin(phase)) * amtS;
-    sh.style.transform = `scaleX(${1 - bob * 0.25})`; sh.style.opacity = String(1 - bob * 0.35);
+    const amt = Math.min(sp, 1);
+    phase += dt * (6 + sp * 5) * (sp > 0.05 ? 1 : 0);
+    const s1 = Math.sin(phase), bob = Math.abs(Math.sin(phase));
+    fig.style.transform = `translateY(${-bob * 5 * amt}%) rotate(${s1 * 3 * amt}deg) scaleY(${1 - (1 - bob) * 0.025 * amt})`;
+    L.style.transform = `translateY(${-Math.max(0, s1) * 5 * amt}%)`;
+    R.style.transform = `translateY(${-Math.max(0, -s1) * 5 * amt}%)`;
+    sh.style.transform = `scaleX(${1 - bob * 0.25 * amt})`;
+    sh.style.opacity = String(1 - bob * 0.4 * amt);
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
