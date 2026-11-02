@@ -107,6 +107,15 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .note{font-family:var(--f-mono);font-size:12px;color:var(--mute)}
 
 /* Faits */
+.playlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.pl{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:6px 18px;padding:16px 20px;background:var(--night-2);border-radius:14px;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s}
+.pl:hover{transform:translateX(6px);background:#fff}
+.pl .rk{font-family:var(--f-display);font-weight:900;font-size:30px;line-height:1;color:var(--sunset);font-variant-numeric:tabular-nums}
+.pl .tt{min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.pl .tt b{font-family:var(--f-display);font-weight:700;font-size:17px;color:var(--ink);overflow-wrap:anywhere}
+.pl .tt span{font-size:15px;color:var(--mute)}
+.pl .lb{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:right}
+@media (max-width:620px){.pl{grid-template-columns:44px minmax(0,1fr)}.pl .rk{font-size:24px}.pl .lb{grid-column:2;text-align:left}}
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;align-items:start}
 .fact{position:relative;padding:20px 22px;background:var(--night-2);border-radius:14px;outline:none;
   transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s;cursor:var(--hand)}
@@ -193,6 +202,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       <a href="#support" data-i18n="nav_support">Soutiens</a>
       <a href="#scenes" data-i18n="nav_scenes">Scènes</a>
       <a href="#listen" data-i18n="nav_listen">Écouter</a>
+      <a href="#playlist">Playlist</a>
       <a href="#booking" data-i18n="nav_booking">Booking</a>
     </nav>
     <div class="lang" role="group" aria-label="Langue / Language">
@@ -359,6 +369,22 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
     </div>
   </section>
 
+  <section class="block" id="playlist">
+    <div class="wrap">
+      <div class="side"><b>On repeat</b><span data-i18n="side_playlist">En boucle en ce moment</span></div>
+      <div class="content">
+        <h2>ROMY's playlist</h2>
+        <ol class="playlist">
+          <li class="pl"><span class="rk">01</span><div class="tt"><b data-i18n="pl_title">Titre</b><span data-i18n="pl_artist">Artiste</span></div><span class="lb">Label</span></li>
+          <li class="pl"><span class="rk">02</span><div class="tt"><b data-i18n="pl_title">Titre</b><span data-i18n="pl_artist">Artiste</span></div><span class="lb">Label</span></li>
+          <li class="pl"><span class="rk">03</span><div class="tt"><b data-i18n="pl_title">Titre</b><span data-i18n="pl_artist">Artiste</span></div><span class="lb">Label</span></li>
+          <li class="pl"><span class="rk">04</span><div class="tt"><b data-i18n="pl_title">Titre</b><span data-i18n="pl_artist">Artiste</span></div><span class="lb">Label</span></li>
+          <li class="pl"><span class="rk">05</span><div class="tt"><b data-i18n="pl_title">Titre</b><span data-i18n="pl_artist">Artiste</span></div><span class="lb">Label</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="booking">
     <div class="wrap">
       <div class="side"><b>Contact</b><span data-i18n="side_booking">Booking &amp; presse</span></div>
@@ -390,7 +416,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
 const EN = {
   go_listen:"Listen ↗",
   intl:"From abroad: +33 6 63 12 05 27",
-  nav_bio:"Bio", nav_support:"Support", nav_scenes:"Venues", nav_listen:"Listen", nav_booking:"Booking",
+  nav_bio:"Bio", nav_support:"Support", nav_scenes:"Venues", nav_listen:"Listen", nav_booking:"Booking", side_playlist:"On repeat right now", pl_title:"Title", pl_artist:"Artist",
   eyebrow:"DJ & producer · Lyon",
   lede:"French touch, house and electro, from Lyon to the nights of Saint-Tropez.",
   cta_book:"Book ROMY", cta_listen:"Listen",
