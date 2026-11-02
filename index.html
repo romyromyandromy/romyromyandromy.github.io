@@ -94,7 +94,8 @@ section.block{position:relative;z-index:1}
 .r-sprite{position:absolute;inset:0;background:url(runsheet.webp) 0 0/1200% 100% no-repeat;transition:transform .15s}
 .r-sprite.back{transform:scaleX(-1)}
 .r-fall{position:absolute;left:-32.21%;top:21.29%;width:172.86%;height:70.67%;background:url(fallsheet.webp) 0 0/1600% 100% no-repeat}
-.runner{will-change:transform}
+.runner{will-change:transform;transform-origin:50% 92.5%}
+.r-anchor{position:absolute;width:2px;height:2px;margin:-1px 0 0 -1px;left:50%;top:84%;pointer-events:none}
 .r-shadow{position:absolute;left:12%;right:12%;bottom:-3%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(23,18,15,.35),transparent);will-change:transform}
 .deck{justify-self:center;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .record{touch-action:none;user-select:none;-webkit-user-select:none}
@@ -292,7 +293,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       </div>
       <div class="deck">
         <div class="record" id="record" role="img" aria-label="Vinyle ROMY">
-          <div class="plate"><div class="disc" id="disc"></div><div class="label-txt" id="label"></div></div>
+          <div class="plate"><div class="disc" id="disc"></div><div class="label-txt" id="label"></div><i class="r-anchor" id="r-anchor"></i></div>
           <div class="runner" id="runner" aria-hidden="true"><div class="r-sprite" id="r-sprite"></div><div class="r-fall" id="r-fall" hidden></div></div>
         </div>
       </div>
@@ -682,10 +683,17 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
   const TILT = Math.cos(62 * Math.PI / 180), R = 0.34, FALL_SPEED = 480;
   let mode = "run", f = 0, acc = 0, prev = performance.now(), t0 = 0, a0 = 0, a2 = 0;
   const showFall = (i) => { sp.hidden = true; fl.hidden = false; fl.style.backgroundPosition = (i / 15 * 100) + "% 0"; };
-  function place(off){
-    const W = rec.getBoundingClientRect().width, rad = off * Math.PI / 180;
-    const dx = -R * Math.sin(rad) * W, dy = (R * Math.cos(rad) - R) * TILT * W, k = 0.86 + 0.14 * Math.cos(rad);
-    runner.style.transform = `translate(calc(-50% + ${dx}px), ${dy}px) scale(${k})`;
+  const anchor = document.getElementById("r-anchor");
+  /* place les pieds du perso sur le point réel du disque (perspective comprise) */
+  function place(off, lying){
+    const rad = off * Math.PI / 180, r = lying ? 0.22 : 0.32;
+    anchor.style.left = (50 - r * 100 * Math.sin(rad)) + "%";
+    anchor.style.top = (50 + r * 100 * Math.cos(rad)) + "%";
+    const ra = anchor.getBoundingClientRect(), rr = rec.getBoundingClientRect();
+    const tx = ra.left + ra.width / 2 - rr.left, ty = ra.top + ra.height / 2 - rr.top;
+    const bx = runner.offsetLeft, by = runner.offsetTop + runner.offsetHeight * 0.925;
+    const k = (lying ? 0.82 : 1) * (0.86 + 0.14 * Math.cos(rad));
+    runner.style.transform = `translate(calc(-50% + ${tx - bx}px), ${ty - by}px) scale(${k})`;
   }
   function step(t){
     const dt = Math.min((t - prev) / 1000, 0.05); prev = t;
@@ -698,12 +706,12 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
         sp.hidden = false; fl.hidden = true;
         sp.style.backgroundPosition = (f / 11 * 100) + "% 0";
         sp.classList.toggle("back", v < -5);
-        runner.style.transform = "translateX(-50%)";
+        place(0, false);
       }
     }
     if (mode !== "run") {
       const off = ang - a0, el = (t - t0) / 1000;
-      place(off);
+      place(off, mode !== "fall" || Math.floor(el * 24) >= 8);
       if (mode === "fall") { const i = Math.floor(el * 24); if (i >= 12) { mode = "ride"; t0 = t; a2 = ang; } else showFall(i); }
       if (mode === "ride") { showFall(12 + Math.floor(el * 8) % 4); const m = ((off % 360) + 360) % 360; if (Math.abs(ang - a2) >= 360 && (m < 14 || m > 346)) { mode = "getup"; t0 = t; a0 = ang - (m > 180 ? m - 360 : m); } }
       if (mode === "getup") { const i = 11 - Math.floor(el * 20); if (i < 0) { mode = "run"; a0 = ang; f = 0; } else showFall(i); }
