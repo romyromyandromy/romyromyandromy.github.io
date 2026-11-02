@@ -116,7 +116,8 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .bg-filters button{all:unset;cursor:var(--hand);font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:var(--night-2);color:var(--mute);transition:background .2s,color .2s}
 .bg-filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .bg-filters button:focus-visible{outline:2px solid var(--sunset);outline-offset:2px}
-.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.bg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:620px){.bg-grid{grid-template-columns:1fr}}
 .bg-card{display:flex;flex-direction:column;background:var(--night-2);border-radius:14px;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s}
 .bg-card:hover{transform:translateY(-6px) rotate(-.4deg);background:#fff;box-shadow:0 22px 40px -22px rgba(232,121,157,.55)}
 .bg-card:nth-child(even):hover{transform:translateY(-6px) rotate(.4deg)}
@@ -447,6 +448,14 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
           <button type="button" id="bgf-perso" data-f="perso" aria-pressed="false" data-i18n="bgf_perso">Perso</button>
         </div>
         <div class="bg-grid">
+          <article class="bg-card" data-cat="">
+            <div class="bg-media"></div>
+            <div class="bg-body">
+              <div class="bg-meta"><span></span><time></time></div>
+              <h3></h3>
+              <p></p>
+            </div>
+          </article>
           <article class="bg-card" data-cat="">
             <div class="bg-media"></div>
             <div class="bg-body">
