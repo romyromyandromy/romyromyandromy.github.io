@@ -115,7 +115,8 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .bg-card{display:flex;flex-direction:column;background:var(--night-2);border-radius:14px;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s}
 .bg-card:hover{transform:translateY(-6px) rotate(-.4deg);background:#fff;box-shadow:0 22px 40px -22px rgba(232,121,157,.55)}
 .bg-card:nth-child(even):hover{transform:translateY(-6px) rotate(.4deg)}
-.bg-media{aspect-ratio:4/3;max-width:100%;position:relative;background:#17120f;overflow:hidden}
+.bg-media{aspect-ratio:4/3;max-width:100%;position:relative;background:color-mix(in srgb,var(--rose) 45%,var(--night-2));overflow:hidden}
+.bg-body{min-height:110px}
 .bg-media img{width:100%;height:100%;object-fit:cover;display:block}
 .bg-media.studio{background:repeating-linear-gradient(90deg,transparent 0 6px,#17120f 6px 9px),linear-gradient(0deg,#17120f 0 22%,var(--sunset) 22% 30%,#17120f 30% 38%,var(--rose) 38% 62%,#17120f 62% 70%,var(--sunset) 70% 78%,#17120f 78%)}
 .bg-media.live{background:radial-gradient(ellipse 60% 80% at 30% 0%,rgba(232,121,157,.85),transparent 70%),radial-gradient(ellipse 50% 70% at 80% 0%,rgba(244,195,211,.6),transparent 70%),#17120f}
@@ -438,28 +439,28 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
           <button type="button" id="bgf-perso" data-f="perso" aria-pressed="false" data-i18n="bgf_perso">Perso</button>
         </div>
         <div class="bg-grid">
-          <article class="bg-card" data-cat="studio">
-            <div class="bg-media studio"></div>
+          <article class="bg-card" data-cat="">
+            <div class="bg-media"></div>
             <div class="bg-body">
-              <div class="bg-meta"><span>Studio</span><time>2026</time></div>
-              <h3>SANDMAN</h3>
-              <p data-i18n="bg1_t">Un track signé ROMY. L'extrait est à écouter dans ROMY's frequency.</p>
+              <div class="bg-meta"><span></span><time></time></div>
+              <h3></h3>
+              <p></p>
             </div>
           </article>
-          <article class="bg-card" data-cat="live">
-            <div class="bg-media live"></div>
+          <article class="bg-card" data-cat="">
+            <div class="bg-media"></div>
             <div class="bg-body">
-              <div class="bg-meta"><span>Live</span><time>Saint-Tropez</time></div>
-              <h3>NUSA</h3>
-              <p data-i18n="bg2_t">Les nuits du Sud, derrière les platines du NUSA.</p>
+              <div class="bg-meta"><span></span><time></time></div>
+              <h3></h3>
+              <p></p>
             </div>
           </article>
-          <article class="bg-card" data-cat="perso">
-            <div class="bg-media perso"></div>
+          <article class="bg-card" data-cat="">
+            <div class="bg-media"></div>
             <div class="bg-body">
-              <div class="bg-meta"><span data-i18n="bgf_perso">Perso</span><time data-i18n="bg3_d">Depuis toujours</time></div>
-              <h3 data-i18n="bg3_h">Fils de DJ</h3>
-              <p data-i18n="bg3_t">Les disques de mon père à la maison. C'est là que tout a commencé.</p>
+              <div class="bg-meta"><span></span><time></time></div>
+              <h3></h3>
+              <p></p>
             </div>
           </article>
         </div>
@@ -624,7 +625,7 @@ document.querySelectorAll(".fact, .pl").forEach(f => {
 document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListener("click", () => {
   const f = btn.dataset.f;
   document.querySelectorAll(".bg-filters button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-  document.querySelectorAll(".bg-card").forEach(c => { c.hidden = !(f === "all" || c.dataset.cat === f); });
+  document.querySelectorAll(".bg-card").forEach(c => { c.hidden = !(f === "all" || c.dataset.cat === f || !c.dataset.cat); });
 }));
 
 /* Mini extraits */
