@@ -75,14 +75,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Vinyle */
 .hero{overflow-x:clip}
 .record{position:relative;width:100%;max-width:420px;aspect-ratio:1;justify-self:center}
-.disc{position:absolute;inset:0;border-radius:50%;
-  background:
-   radial-gradient(circle at 50% 50%,var(--night) 0 2.2%,transparent 2.4%),
-   radial-gradient(circle at 50% 50%,var(--sunset) 0 17%,var(--rose) 30%,transparent 30.3%),
-   repeating-radial-gradient(circle at 50% 50%,#0b0912 0 2px,#1a1626 2px 3px),
-   #0b0912;
-  box-shadow:0 30px 70px -24px rgba(232,121,157,.45);will-change:transform}
-.disc::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 10%,rgba(255,255,255,.08) 14%,transparent 20% 60%,rgba(255,255,255,.06) 64%,transparent 70%)}
+.disc{position:absolute;inset:0;border-radius:50%;background:url(vinyl.png) center/100% 100% no-repeat;box-shadow:0 30px 70px -24px rgba(232,121,157,.45);will-change:transform}
+.disc::after{content:none;position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 10%,rgba(255,255,255,.08) 14%,transparent 20% 60%,rgba(255,255,255,.06) 64%,transparent 70%)}
 .label-txt{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:clamp(14px,3.4vw,22px);letter-spacing:.2em;color:var(--night);will-change:transform;pointer-events:none}
 .deck{justify-self:center;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .record{touch-action:none;user-select:none;-webkit-user-select:none}
@@ -271,7 +265,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       <div class="deck">
         <div class="record" id="record" role="img" aria-label="Vinyle ROMY">
           <div class="disc" id="disc"></div>
-          <div class="label-txt" id="label"><span>ROMY</span></div>
+          <div class="label-txt" id="label"></div>
         </div>
       </div>
     </div>
