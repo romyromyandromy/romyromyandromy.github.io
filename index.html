@@ -294,7 +294,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       <a href="#scenes" data-i18n="nav_scenes">Scènes</a>
       <a href="#listen" data-i18n="nav_listen">Écouter</a>
       <a href="#playlist">Playlist</a>
-      <a href="#romyls">ROMYLS</a>
+      <a href="#romyls">ROMEELS</a>
       <a href="#background" data-i18n="nav_gal">Gallery</a>
       <a href="#booking" data-i18n="nav_booking">Booking</a>
     </nav>
@@ -511,14 +511,14 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
     <div class="wrap">
       <div class="side"><b>Reels</b><span data-i18n="side_reels">À scroller</span></div>
       <div class="content">
-        <h2>ROMYLS</h2>
+        <h2>ROMEELS</h2>
         <div class="romyls">
           <div class="rl-phone">
-            <div class="rl-brand">ROMYLS</div><div class="rl-count" id="rl-count"></div>
+            <div class="rl-brand">ROMEELS</div><div class="rl-count" id="rl-count"></div>
             <div class="rl-feed" id="rl-feed"></div>
             <button type="button" class="rl-sound" id="rl-sound" aria-label="Activer le son">SON</button>
           </div>
-          <div class="rl-nav"><button type="button" id="rl-up" aria-label="ROMYL précédent">↑</button><button type="button" id="rl-down" aria-label="ROMYL suivant">↓</button></div>
+          <div class="rl-nav"><button type="button" id="rl-up" aria-label="ROMEEL précédent">↑</button><button type="button" id="rl-down" aria-label="ROMEEL suivant">↓</button></div>
         </div>
       </div>
     </div>
@@ -606,7 +606,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
 const EN = {
   go_listen:"Listen ↗",
   intl:"From abroad: +33 6 63 12 05 27",
-  nav_bio:"Bio", nav_support:"Support", nav_scenes:"Venues", nav_listen:"Listen", nav_booking:"Booking", side_reels:"Scroll through", reel_soon:"ROMYL coming soon", vid_soon:"Video coming soon", nav_gal:"Gallery", gal_title:"ROMY's gallery", side_playlist:"On repeat right now", pl_title:"Title", pl_artist:"Artist", pl_note:"Why this track is on repeat.", pl_soon:"Coming soon", pl5_note:"Just to make my summer last a little longer.", pl4_note:"For those with main character syndrome.", pl3_note:"I've been sleeping less since I found this track…", pl2_note:"How could it not make this top…", pl1_note:"My bubble of calm, every single time.", side_bg:"Studio, live and life", bgf_all:"All", bgf_perso:"Life", bg1_t:"A ROMY original. Listen to the snippet in ROMY’s frequency.", bg2_t:"Southern nights behind the decks at NUSA.", bg3_d:"Since forever", bg3_h:"Son of a DJ", bg3_t:"My father’s records at home. That’s where it all began.",
+  nav_bio:"Bio", nav_support:"Support", nav_scenes:"Venues", nav_listen:"Listen", nav_booking:"Booking", side_reels:"Scroll through", reel_soon:"ROMEEL coming soon", vid_soon:"Video coming soon", nav_gal:"Gallery", gal_title:"ROMY's gallery", side_playlist:"On repeat right now", pl_title:"Title", pl_artist:"Artist", pl_note:"Why this track is on repeat.", pl_soon:"Coming soon", pl5_note:"Just to make my summer last a little longer.", pl4_note:"For those with main character syndrome.", pl3_note:"I've been sleeping less since I found this track…", pl2_note:"How could it not make this top…", pl1_note:"My bubble of calm, every single time.", side_bg:"Studio, live and life", bgf_all:"All", bgf_perso:"Life", bg1_t:"A ROMY original. Listen to the snippet in ROMY’s frequency.", bg2_t:"Southern nights behind the decks at NUSA.", bg3_d:"Since forever", bg3_h:"Son of a DJ", bg3_t:"My father’s records at home. That’s where it all began.",
   eyebrow:"DJ & producer · Lyon",
   lede:"French touch, house and electro, from Lyon to the nights of Saint-Tropez.",
   cta_book:"Book ROMY", cta_listen:"Listen",
@@ -826,7 +826,7 @@ document.querySelectorAll(".support li.sup").forEach(li => {
   });
 });
 
-/* ROMYLS : ajoute une vidéo ici => { src: "romyls/xxx.mp4", poster: "romyls/xxx.jpg", title: "Légende" } */
+/* ROMEELS : ajoute une vidéo ici => { src: "romyls/xxx.mp4", poster: "romyls/xxx.jpg", title: "Légende" } */
 const ROMYLS = [
   { src: "", poster: "", title: "" },
   { src: "", poster: "", title: "" },
@@ -840,7 +840,7 @@ const ROMYLS = [
   let muted = true;
   ROMYLS.forEach(r => {
     const it = document.createElement("div");
-    if (!r.src) { it.className = "rl-item empty"; it.innerHTML = '<span data-i18n="reel_soon">ROMYL à venir</span>'; }
+    if (!r.src) { it.className = "rl-item empty"; it.innerHTML = '<span data-i18n="reel_soon">ROMEEL à venir</span>'; }
     else {
       it.className = "rl-item";
       it.innerHTML = `<video src="${r.src}" loop playsinline muted preload="metadata"${r.poster ? ` poster="${r.poster}"` : ""}></video>` + (r.title ? '<div class="rl-cap"></div>' : "");
