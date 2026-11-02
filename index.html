@@ -90,10 +90,9 @@ section.block{position:relative;z-index:1}
 .label-txt{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:clamp(14px,3.4vw,22px);letter-spacing:.2em;color:var(--night);will-change:transform;pointer-events:none}
 .record{perspective:1200px}
 .plate{position:absolute;inset:0;transform:rotateX(62deg);transform-style:preserve-3d}
-.runner{position:absolute;left:50%;top:14%;width:26%;aspect-ratio:224/448;transform:translateX(-50%);pointer-events:none;z-index:2}
-.r-fig{position:absolute;inset:0;transform-origin:50% 100%;will-change:transform}
-.r-fig img{position:absolute;inset:0;width:100%;height:100%;display:block}
-.r-leg{will-change:transform}
+.runner{position:absolute;left:50%;top:14%;width:36%;aspect-ratio:210/300;transform:translateX(-50%);pointer-events:none;z-index:2}
+.r-sprite{position:absolute;inset:0;background:url(runsheet.png) 0 0/1200% 100% no-repeat;transition:transform .15s}
+.r-sprite.back{transform:scaleX(-1)}
 .r-shadow{position:absolute;left:12%;right:12%;bottom:-3%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(23,18,15,.35),transparent);will-change:transform}
 .deck{justify-self:center;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .record{touch-action:none;user-select:none;-webkit-user-select:none}
@@ -292,14 +291,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       <div class="deck">
         <div class="record" id="record" role="img" aria-label="Vinyle ROMY">
           <div class="plate"><div class="disc" id="disc"></div><div class="label-txt" id="label"></div></div>
-          <div class="runner" id="runner" aria-hidden="true">
-            <span class="r-shadow"></span>
-            <div class="r-fig" id="r-fig">
-              <img class="r-leg" id="r-legL" src="runner-legL.png" alt="">
-              <img class="r-leg" id="r-legR" src="runner-legR.png" alt="">
-              <img class="r-body" src="runner-body.png" alt="">
-            </div>
-          </div>
+          <div class="runner" id="runner" aria-hidden="true"><div class="r-sprite" id="r-sprite"></div></div>
         </div>
       </div>
     </div>
@@ -681,22 +673,18 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
 /* Barre du haut : transparente en haut de page, texturée au défilement */
 (() => { const top = document.querySelector(".top"); const f = () => top.classList.toggle("scrolled", window.scrollY > 24); f(); window.addEventListener("scroll", f, {passive:true}); })();
 
-/* Petit ROMY qui court sur le disque */
+/* Petit ROMY qui court sur le disque (12 frames) */
 (() => {
-  const fig = document.getElementById("r-fig"), L = document.getElementById("r-legL"), R = document.getElementById("r-legR"), sh = document.querySelector(".r-shadow");
-  if (!fig) return;
-  let phase = 0, prev = performance.now();
+  const sp = document.getElementById("r-sprite");
+  if (!sp) return;
+  let f = 0, acc = 0, prev = performance.now();
   function step(t){
     const dt = Math.min((t - prev) / 1000, 0.05); prev = t;
-    const v = window.__romyVel || 0, sp = Math.min(Math.abs(v) / 100, 4);
-    const amt = Math.min(sp, 1);
-    phase += dt * (6 + sp * 5) * (sp > 0.05 ? 1 : 0);
-    const s1 = Math.sin(phase), bob = Math.abs(Math.sin(phase));
-    fig.style.transform = `translateY(${-bob * 5 * amt}%) rotate(${s1 * 3 * amt}deg) scaleY(${1 - (1 - bob) * 0.025 * amt})`;
-    L.style.transform = `translateY(${-Math.max(0, s1) * 5 * amt}%)`;
-    R.style.transform = `translateY(${-Math.max(0, -s1) * 5 * amt}%)`;
-    sh.style.transform = `scaleX(${1 - bob * 0.25 * amt})`;
-    sh.style.opacity = String(1 - bob * 0.4 * amt);
+    const v = window.__romyVel || 0, speed = Math.min(Math.abs(v) / 100, 4);
+    if (speed > 0.05) { acc += dt * 16 * Math.max(0.6, speed); while (acc >= 1) { acc -= 1; f = (f + 1) % 12; } }
+    else { f = 11; acc = 0; }
+    sp.style.backgroundPosition = (f / 11 * 100) + "% 0";
+    sp.classList.toggle("back", v < -5);
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
