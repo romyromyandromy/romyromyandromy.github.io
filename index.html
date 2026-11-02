@@ -197,7 +197,12 @@ h2,.facts strong,.venue h3{color:var(--ink)}
 .track .t-meta b{font-family:var(--f-display);font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .track .t-sub{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
 .track .t-time{grid-area:time;font-family:var(--f-mono);font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
-.track .wave{grid-area:wave;display:flex;align-items:center;gap:2px;height:26px}
+.track .wave{grid-area:wave;display:flex;align-items:center;gap:2px;height:36px;transition:height .45s cubic-bezier(.2,.8,.2,1)}
+.track{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s,padding .35s}
+.track:hover,.track:focus-within,.track.playing{transform:scale(1.02);background:#fff;box-shadow:0 18px 40px -18px rgba(232,121,157,.45);padding-block:22px}
+.track:hover .wave,.track:focus-within .wave,.track.playing .wave{height:90px}
+.track .wave i{transition:background .2s}
+@media (prefers-reduced-motion:reduce){.track,.track .wave{transition:none}}
 .track .wave i{flex:1;min-width:1px;border-radius:2px;background:var(--rose)}
 .track .wave i.on{background:var(--sunset)}
 .link{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 20px;border:1px dashed var(--line);border-radius:14px;color:var(--mute);text-decoration:none}
@@ -657,6 +662,9 @@ document.querySelectorAll(".bg-filters button").forEach(btn => btn.addEventListe
     const src = tr.dataset.src;
     if (!src) { btn.disabled = true; return; }
     const audio = new Audio(src); audio.preload = "metadata";
+    audio.addEventListener("play", () => tr.classList.add("playing"));
+    audio.addEventListener("pause", () => tr.classList.remove("playing"));
+    audio.addEventListener("ended", () => tr.classList.remove("playing"));
     audio.addEventListener("loadedmetadata", () => { time.textContent = fmt(audio.duration); });
     audio.addEventListener("timeupdate", () => {
       const p = audio.duration ? audio.currentTime / audio.duration : 0;
