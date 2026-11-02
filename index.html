@@ -155,24 +155,23 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .pl .links-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .pl .links-l a{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:#fff;background:var(--ink);padding:6px 12px;border-radius:999px;cursor:var(--hand)}
 .pl .links-l a:hover{background:var(--sunset)}
-.reels{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(150px,22%,210px);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
-.reel{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:14px;overflow:hidden;background:#17120f;scroll-snap-align:start;cursor:var(--hand);border:0;padding:0;font:inherit;color:inherit;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
-.reel:hover,.reel:focus-visible{transform:translateY(-4px);box-shadow:0 18px 36px -18px rgba(232,121,157,.6);outline:none}
-.reel video,.reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.reel .r-cap{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 12px;background:linear-gradient(transparent,rgba(23,18,15,.75));color:#fff;font-size:13px;font-weight:700;text-align:left}
-.reel .r-play{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);color:#17120f;display:grid;place-items:center;font-size:11px}
-.reel.empty{cursor:default;background:repeating-linear-gradient(135deg,#1d1820 0 10px,#17120f 10px 20px)}
-.reel.empty:hover{transform:none;box-shadow:none}
-.reel.empty span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sunset);text-align:center;padding:10px}
-.rv{position:fixed;inset:0;z-index:50;background:#0d0a0c}
-.rv-feed{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain}
-.rv-item{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:grid;place-items:center;position:relative}
-.rv-item video{height:100%;max-width:100%;aspect-ratio:9/16;object-fit:cover;background:#000}
-.rv-item .rv-cap{position:absolute;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(90vw,calc(100vh * 9 / 16 - 32px));color:#fff;font-weight:700;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
-.rv-btn{position:absolute;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#17120f;font:600 16px/1 var(--f-body);display:grid;place-items:center;cursor:var(--hand)}
-.rv-close{top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
-.rv-sound{top:calc(70px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));font-size:11px;font-family:var(--f-mono)}
-.rv-brand{position:absolute;z-index:2;top:calc(24px + env(safe-area-inset-top,0px));left:calc(20px + env(safe-area-inset-left,0px));font-family:var(--f-display);font-weight:900;color:#fff;letter-spacing:.06em}
+.romyls{display:flex;justify-content:center;align-items:center;gap:18px}
+.rl-phone{position:relative;height:min(82vh,760px);aspect-ratio:9/16;max-width:100%;border-radius:22px;overflow:hidden;background:#17120f;box-shadow:0 30px 60px -30px rgba(23,18,15,.55)}
+.rl-feed{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+.rl-feed::-webkit-scrollbar{display:none}
+.rl-item{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always}
+.rl-item video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;cursor:var(--hand)}
+.rl-item.empty{background:repeating-linear-gradient(135deg,#1d1820 0 12px,#17120f 12px 24px);display:grid;place-items:center}
+.rl-item.empty span{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sunset)}
+.rl-cap{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 20px;background:linear-gradient(transparent,rgba(23,18,15,.8));color:#fff;font-weight:700;font-size:15px;pointer-events:none}
+.rl-brand{position:absolute;top:14px;left:16px;z-index:2;font-family:var(--f-display);font-weight:900;font-size:14px;letter-spacing:.06em;color:#fff;pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.rl-count{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:11px;color:#fff;letter-spacing:.1em;pointer-events:none}
+.rl-sound{position:absolute;right:12px;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#17120f;font:500 10px/1 var(--f-mono);letter-spacing:.06em;cursor:var(--hand)}
+.rl-nav{display:flex;flex-direction:column;gap:10px}
+.rl-nav button{width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:16px;cursor:var(--hand);transition:background .2s}
+.rl-nav button:hover{background:var(--sunset)}
+.rl-nav button:focus-visible,.rl-sound:focus-visible{outline:2px solid var(--sunset);outline-offset:3px}
+@media (max-width:620px){.rl-nav{display:none}.rl-phone{height:min(78vh,640px)}}
 .playlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .pl{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:6px 18px;padding:16px 20px;background:var(--night-2);border-radius:14px;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s}
 .pl{cursor:var(--hand);outline:none}
@@ -513,7 +512,14 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
       <div class="side"><b>Reels</b><span data-i18n="side_reels">À scroller</span></div>
       <div class="content">
         <h2>ROMYLS</h2>
-        <div class="reels" id="reels"></div>
+        <div class="romyls">
+          <div class="rl-phone">
+            <div class="rl-brand">ROMYLS</div><div class="rl-count" id="rl-count"></div>
+            <div class="rl-feed" id="rl-feed"></div>
+            <button type="button" class="rl-sound" id="rl-sound" aria-label="Activer le son">SON</button>
+          </div>
+          <div class="rl-nav"><button type="button" id="rl-up" aria-label="ROMYL précédent">↑</button><button type="button" id="rl-down" aria-label="ROMYL suivant">↓</button></div>
+        </div>
       </div>
     </div>
   </section>
@@ -829,46 +835,33 @@ const ROMYLS = [
   { src: "", poster: "", title: "" }
 ];
 (() => {
-  const row = document.getElementById("reels");
-  if (!row) return;
-  const full = ROMYLS.filter(r => r.src);
+  const feed = document.getElementById("rl-feed"), cnt = document.getElementById("rl-count"), snd = document.getElementById("rl-sound");
+  if (!feed) return;
+  let muted = true;
   ROMYLS.forEach(r => {
-    if (!r.src) {
-      const d = document.createElement("div"); d.className = "reel empty";
-      d.innerHTML = '<span data-i18n="reel_soon">ROMYL à venir</span>'; row.appendChild(d); return;
-    }
-    const b = document.createElement("button"); b.type = "button"; b.className = "reel";
-    b.setAttribute("aria-label", r.title || "ROMYL");
-    b.innerHTML = (r.poster ? `<img src="${r.poster}" alt="" loading="lazy">` : `<video src="${r.src}#t=0.1" muted playsinline preload="metadata"></video>`) + '<span class="r-play">▶</span>' + (r.title ? `<span class="r-cap"></span>` : "");
-    if (r.title) b.querySelector(".r-cap").textContent = r.title;
-    b.addEventListener("click", () => openViewer(full.indexOf(r)));
-    row.appendChild(b);
-  });
-  let muted = true, viewer = null, io = null;
-  function openViewer(start){
-    viewer = document.createElement("div"); viewer.className = "rv"; viewer.setAttribute("role", "dialog"); viewer.setAttribute("aria-label", "ROMYLS");
-    viewer.innerHTML = '<div class="rv-brand">ROMYLS</div><button type="button" class="rv-btn rv-close" aria-label="Fermer">✕</button><button type="button" class="rv-btn rv-sound" aria-label="Son">SON</button><div class="rv-feed"></div>';
-    const feed = viewer.querySelector(".rv-feed");
-    full.forEach(r => {
-      const it = document.createElement("div"); it.className = "rv-item";
-      it.innerHTML = `<video src="${r.src}" loop playsinline preload="metadata"${r.poster ? ` poster="${r.poster}"` : ""}></video>` + (r.title ? '<div class="rv-cap"></div>' : "");
-      if (r.title) it.querySelector(".rv-cap").textContent = r.title;
-      it.querySelector("video").muted = muted;
+    const it = document.createElement("div");
+    if (!r.src) { it.className = "rl-item empty"; it.innerHTML = '<span data-i18n="reel_soon">ROMYL à venir</span>'; }
+    else {
+      it.className = "rl-item";
+      it.innerHTML = `<video src="${r.src}" loop playsinline muted preload="metadata"${r.poster ? ` poster="${r.poster}"` : ""}></video>` + (r.title ? '<div class="rl-cap"></div>' : "");
+      if (r.title) it.querySelector(".rl-cap").textContent = r.title;
       it.querySelector("video").addEventListener("click", e => { const v = e.target; v.paused ? v.play().catch(() => {}) : v.pause(); });
-      feed.appendChild(it);
-    });
-    document.body.appendChild(viewer); document.documentElement.style.overflow = "hidden";
-    const snd = viewer.querySelector(".rv-sound");
-    const setSnd = () => { snd.textContent = muted ? "SON" : "MUET"; feed.querySelectorAll("video").forEach(v => v.muted = muted); };
-    snd.addEventListener("click", () => { muted = !muted; setSnd(); }); setSnd();
-    viewer.querySelector(".rv-close").addEventListener("click", closeViewer);
-    io = new IntersectionObserver(es => es.forEach(e => { const v = e.target.querySelector("video"); if (e.isIntersecting) { v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); }), { root: feed, threshold: 0.6 });
-    feed.querySelectorAll(".rv-item").forEach(it => io.observe(it));
-    feed.scrollTop = Math.max(0, start) * feed.clientHeight;
-    viewer.querySelector(".rv-close").focus();
-  }
-  function closeViewer(){ if (!viewer) return; io.disconnect(); viewer.querySelectorAll("video").forEach(v => v.pause()); viewer.remove(); viewer = null; document.documentElement.style.overflow = ""; }
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeViewer(); });
+    }
+    feed.appendChild(it);
+  });
+  const items = [...feed.children];
+  const idx = () => Math.round(feed.scrollTop / Math.max(feed.clientHeight, 1));
+  const upd = () => { cnt.textContent = (idx() + 1) + " / " + items.length; };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target.querySelector("video"); if (!v) return;
+    if (e.isIntersecting) { v.muted = muted; v.play().catch(() => {}); } else { v.pause(); }
+  }), { root: feed, threshold: 0.6 });
+  items.forEach(it => io.observe(it));
+  feed.addEventListener("scroll", upd, { passive: true }); upd();
+  const go = d => feed.scrollTo({ top: Math.max(0, Math.min(items.length - 1, idx() + d)) * feed.clientHeight, behavior: "smooth" });
+  document.getElementById("rl-up").addEventListener("click", () => go(-1));
+  document.getElementById("rl-down").addEventListener("click", () => go(1));
+  snd.addEventListener("click", () => { muted = !muted; snd.textContent = muted ? "SON" : "MUET"; feed.querySelectorAll("video").forEach(v => v.muted = muted); });
 })();
 
 /* Mini extraits */
