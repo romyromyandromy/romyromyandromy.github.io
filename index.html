@@ -107,11 +107,23 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .note{font-family:var(--f-mono);font-size:12px;color:var(--mute)}
 
 /* Faits */
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
-.facts div{padding:20px 22px;background:var(--night-2);border-radius:14px}
-.facts div:last-child{border-right:0}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;align-items:start}
+.fact{position:relative;padding:20px 22px;background:var(--night-2);border-radius:14px;outline:none;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s;cursor:var(--hand)}
 .facts strong{display:block;font-family:var(--f-display);font-size:30px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
-.facts span{font-size:14px;color:var(--mute)}
+.fact>span{font-size:14px;color:var(--mute)}
+.fact .more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .4s cubic-bezier(.2,.8,.2,1),opacity .3s,margin .4s;margin-top:0}
+.fact .more>div{overflow:hidden;min-height:0}
+.fact .more p{margin:0 0 8px;font-size:14px;line-height:1.5;color:var(--ink)}
+.fact .more ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.fact .more li{display:flex;justify-content:space-between;gap:10px}
+.fact .more li em{font-style:normal;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sunset);white-space:nowrap}
+.fact .more img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 38%;border-radius:10px;margin-top:4px}
+.fact:hover,.fact:focus-visible,.fact.open{transform:scale(1.04);background:#fff;box-shadow:0 18px 40px -18px rgba(232,121,157,.45);z-index:2}
+.fact:hover .more,.fact:focus-visible .more,.fact.open .more{grid-template-rows:1fr;opacity:1;margin-top:14px}
+.fact .plus{position:absolute;top:16px;right:18px;font-family:var(--f-mono);font-size:14px;color:var(--sunset);transition:transform .3s}
+.fact:hover .plus,.fact:focus-visible .plus,.fact.open .plus{transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){.fact,.fact .more,.fact .plus{transition:none}}
 @media (max-width:620px){.facts{grid-template-columns:1fr}}
 
 /* Soutiens */
@@ -234,9 +246,30 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
         </div>
 
         <div class="facts">
-          <div><strong>6</strong><span data-i18n="fact_years">ans derrière les platines</span></div>
-          <div><strong>2</strong><span data-i18n="fact_bases">ports d'attache : Lyon et Saint-Tropez</span></div>
-          <div><strong>5+</strong><span data-i18n="fact_support">artistes internationaux ont joué ses tracks</span></div>
+          <div class="fact" tabindex="0"><i class="plus" aria-hidden="true">+</i><strong>6</strong><span data-i18n="fact_years">ans derrière les platines</span>
+            <div class="more"><div>
+              <p data-i18n="more_years">Fils de DJ, il grandit entouré de disques. Il commence par la production, puis passe derrière les platines il y a six ans.</p>
+              <img src="portrait.jpg" alt="ROMY">
+            </div></div>
+          </div>
+          <div class="fact" tabindex="0"><i class="plus" aria-hidden="true">+</i><strong>2</strong><span data-i18n="fact_bases">ports d'attache : Lyon et Saint-Tropez</span>
+            <div class="more"><div><ul>
+              <li>Azar / Maison Gerland / Members <em>Lyon</em></li>
+              <li>Le Six / Brotteaux <em>Lyon</em></li>
+              <li>Le Petit Salon <em>Lyon</em></li>
+              <li>Mamy Rose <em>Lyon</em></li>
+              <li>NUSA <em>Saint-Tropez</em></li>
+            </ul></div></div>
+          </div>
+          <div class="fact" tabindex="0"><i class="plus" aria-hidden="true">+</i><strong>5+</strong><span data-i18n="fact_support">artistes internationaux ont joué ses tracks</span>
+            <div class="more"><div><ul>
+              <li>Keinemusik <em>Berlin</em></li>
+              <li>Adam Port <em>Berlin</em></li>
+              <li>Marco Carola <em>Napoli</em></li>
+              <li>Marten Lou <em>Allemagne</em></li>
+              <li>Alex Wann <em>France</em></li>
+            </ul></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -370,6 +403,7 @@ const EN = {
   bio_long_4:"In the studio, his productions have found their way into the sets of international artists including Keinemusik, Adam Port, Marco Carola, Marten Lou and Alex Wann.",
   copy_bio:"Copy bio",
   fact_years:"years behind the decks", fact_bases:"home bases: Lyon and Saint-Tropez", fact_support:"international artists have played his tracks",
+  more_years:"The son of a DJ, he grew up surrounded by records. He started out in production, then stepped behind the decks six years ago.",
   side_support:"Supported by", support_title:"His tracks, played by", support_more:"… and others.",
   side_scenes:"Clubs & venues", scenes_title:"Where he plays",
   v_south:"The South", v_south_d:"Regular dates on the Riviera, in Saint-Tropez.", v_azar:"Resident DJ for the Lavorel group.", v_six:"DJ / Event organisation", venues_more:"… and many more.",
@@ -471,6 +505,12 @@ if (false) document.addEventListener("click", () => {
   }
   requestAnimationFrame(frame);
 })();
+
+/* Encadrés chiffres : tap sur mobile */
+document.querySelectorAll(".fact").forEach(f => {
+  f.addEventListener("click", () => { if (matchMedia("(hover: hover)").matches) return; const o = !f.classList.contains("open"); document.querySelectorAll(".fact.open").forEach(x => x.classList.remove("open")); if (o) f.classList.add("open"); });
+  f.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); f.click(); } });
+});
 
 /* Mini extraits */
 (() => {
