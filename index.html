@@ -166,7 +166,9 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,38px);l
 .rl-cap{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 20px;background:linear-gradient(transparent,rgba(23,18,15,.8));color:#fff;font-weight:700;font-size:15px;pointer-events:none}
 .rl-brand{position:absolute;top:14px;left:16px;z-index:2;font-family:var(--f-display);font-weight:900;font-size:14px;letter-spacing:.06em;color:#fff;pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.4)}
 .rl-count{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:11px;color:#fff;letter-spacing:.1em;pointer-events:none}
-.rl-sound{position:absolute;right:12px;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#17120f;font:500 10px/1 var(--f-mono);letter-spacing:.06em;cursor:var(--hand)}
+.rl-sound{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;height:38px;padding:0 16px;border-radius:999px;border:0;background:rgba(255,255,255,.95);color:#17120f;font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;cursor:var(--hand);white-space:nowrap;box-shadow:0 6px 18px -6px rgba(0,0,0,.5)}
+.rl-sound.on{background:var(--sunset);color:#fff}
+.rl-cap{padding-bottom:66px}
 .rl-nav{display:flex;flex-direction:column;gap:10px}
 .rl-nav button{width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:16px;cursor:var(--hand);transition:background .2s}
 .rl-nav button:hover{background:var(--sunset)}
@@ -516,7 +518,7 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;flex-
           <div class="rl-phone">
             <div class="rl-brand">ROMEELS</div><div class="rl-count" id="rl-count"></div>
             <div class="rl-feed" id="rl-feed"></div>
-            <button type="button" class="rl-sound" id="rl-sound" aria-label="Activer le son">SON</button>
+            <button type="button" class="rl-sound" id="rl-sound">🔇 Activer le son</button>
           </div>
           <div class="rl-nav"><button type="button" id="rl-up" aria-label="ROMEEL précédent">↑</button><button type="button" id="rl-down" aria-label="ROMEEL suivant">↓</button></div>
         </div>
@@ -838,6 +840,15 @@ const ROMYLS = [
   const feed = document.getElementById("rl-feed"), cnt = document.getElementById("rl-count"), snd = document.getElementById("rl-sound");
   if (!feed) return;
   let muted = true;
+  function setMuted(m){
+    muted = m;
+    snd.textContent = muted ? "🔇 Activer le son" : "🔊 Son activé";
+    snd.classList.toggle("on", !muted);
+    feed.querySelectorAll("video").forEach(v => { v.muted = muted; v.volume = 1; });
+    const cur = feed.children[Math.round(feed.scrollTop / Math.max(feed.clientHeight, 1))];
+    const cv = cur && cur.querySelector("video");
+    if (cv && !muted) cv.play().catch(() => {});
+  }
   ROMYLS.forEach(r => {
     const it = document.createElement("div");
     if (!r.src) { it.className = "rl-item empty"; it.innerHTML = '<span data-i18n="reel_soon">ROMEEL à venir</span>'; }
@@ -845,7 +856,7 @@ const ROMYLS = [
       it.className = "rl-item";
       it.innerHTML = `<video src="${r.src}" loop playsinline muted preload="metadata"${r.poster ? ` poster="${r.poster}"` : ""}></video>` + (r.title ? '<div class="rl-cap"></div>' : "");
       if (r.title) it.querySelector(".rl-cap").textContent = r.title;
-      it.querySelector("video").addEventListener("click", e => { const v = e.target; v.paused ? v.play().catch(() => {}) : v.pause(); });
+      it.querySelector("video").addEventListener("click", e => { const v = e.target; if (muted) { setMuted(false); return; } v.paused ? v.play().catch(() => {}) : v.pause(); });
     }
     feed.appendChild(it);
   });
@@ -854,14 +865,14 @@ const ROMYLS = [
   const upd = () => { cnt.textContent = (idx() + 1) + " / " + items.length; };
   const io = new IntersectionObserver(es => es.forEach(e => {
     const v = e.target.querySelector("video"); if (!v) return;
-    if (e.isIntersecting) { v.muted = muted; v.play().catch(() => {}); } else { v.pause(); }
+    if (e.isIntersecting) { v.muted = muted; v.play().catch(() => { v.muted = true; setMuted(true); v.play().catch(() => {}); }); } else { v.pause(); }
   }), { root: feed, threshold: 0.6 });
   items.forEach(it => io.observe(it));
   feed.addEventListener("scroll", upd, { passive: true }); upd();
   const go = d => feed.scrollTo({ top: Math.max(0, Math.min(items.length - 1, idx() + d)) * feed.clientHeight, behavior: "smooth" });
   document.getElementById("rl-up").addEventListener("click", () => go(-1));
   document.getElementById("rl-down").addEventListener("click", () => go(1));
-  snd.addEventListener("click", () => { muted = !muted; snd.textContent = muted ? "SON" : "MUET"; feed.querySelectorAll("video").forEach(v => v.muted = muted); });
+  snd.addEventListener("click", () => setMuted(!muted));
 })();
 
 /* Mini extraits */
